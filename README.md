@@ -60,11 +60,11 @@ Once you have the array looking like that, you will need to write out a `JSON` f
 
 ## CSV Files
 
-(Right click, then choose download.)
+click link, then click the `raw` button, then right click anywhere and choose `Save as...`.
 
 1. [citiesData.csv](citiesData.csv)  
 2. [citiesData1000.csv](citiesData1000.csv) (A Larger data set if you want. 10 countries, 5 states/country, 20 cities/state.)
-3. real data
+3. real data (coming)
 
 ## Docs
 
