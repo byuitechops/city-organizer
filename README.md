@@ -6,13 +6,14 @@
 1. Practice Declarative(What not How) Functional Programming  
 1. Practice changing one data structure into another data structure
 1. Practice learning a new library from their documentation
+1. Learn how to make a globally installed Node.js app
 1. Practice using the Project Life Cycle
     1. Make a Project Capture Document
     1. Make a Key Component Document
 
 ## Task
 
-Convert data from a table data structure in a CSV file to a hierarchical data structure it a JSON file.
+Convert data from a table data structure in a CSV file to a hierarchical data structure it a JSON file. This will be done by creating a globally installed Node.js CLI that takes a filename as a paramiter then writes out the JSON file back next to the file that was passed in. 
 	
 ## Instructions
 
@@ -29,11 +30,12 @@ The CSV data looks like this:
 | ...           | ...       | ...         | ...          |
 
 
-You will notice a pattern in the names of the countries, states and cities. There are a total of five countries named `Country1` to `Country5`. There are five states in each country. The state is named after the country it belongs to. For example, every state in `Country4` starts with `c4_` and then `State1` through `State5`. The city names follow a similar pattern, being named after the state and country that it belongs to. There are four cities in each state. The data was created this way to make it easy to verify the out put of your code. Even though this is not real data with real names you should treat them like they are real names of countries, states and cities. Meaning you should not use the numbers to transform your data. Treat them like normal strings.
+You will notice a pattern in the names of the countries, states and cities. There are a total of five countries named `Country1` to `Country5`. There are five states in each country. The state is named after the country it belongs to. For example, every state in `Country4` starts with `c4_` and then `State1` through `State5`. The city names follow a similar pattern, being named after the state and country that it belongs to. There are four cities in each state. **The data was created this way to make it easy to verify the out put of your code. Even though this is not real data with real names you should treat them like they are real names of countries, states and cities. Meaning you should not use the numbers in the names to transform your data. Treat them like normal strings.**
 
-You will need to read in the CSV file and then parse the data into an array of city objects with 4 keys of info. To read in the file just use an appropriate method on `fs`. To parse the CSV string into an array of objects use the `d3-dsv` library. `d3` is a conglomerate of smaller libraries that are used to make really cool data visualizations. Check out the whole library at the [d3 website](https://d3js.org/). We use one of the sub-libraries. It is called `d3-dsv`. It was once called `d3-csv` but there are things called `tsv` "Tab Separated Values" and technically you can use anything to separate the values. The code is the same no matter the separator, you just need to know what separates the data. So he made the code more flexible and renamed it to "dsv" meaning "Delimiter Separated Values". A delimiter is just a character that separates something. You will need to read the library's documentation to figure out how to use the library. Being able to read and figure out someone else's documentation is a key skill in programing. I have some tips but, the skill is really only learned by doing. Here's your chance to get started! (Hint: make sure you don't miss the part in their documentation about the `BOM`, you will need it.) The `d3-dsv` documentation is in their [README.md in the d3-dsv github repository](https://github.com/d3/d3-dsv#d3-dsv). 
+You will need to get the name of the file the user wants to convert from the from `argv`, read in that CSV file and then parse the data into an array of city objects with 4 keys of info. To make and devlop a globally installed CLI in Node.js click the following link. [Globally installed CLI in Node.js Tutorial](Link comming). To read in the file just use an appropriate method on `fs`. To parse the CSV string into an array of objects use the `d3-dsv` library. `d3` is a conglomerate of smaller libraries that are used to make really cool data visualizations. Check out the whole library at the [d3 website](https://d3js.org/). We use one of the sub-libraries. It is called `d3-dsv`. It was once called `d3-csv` but there are things called `tsv` "Tab Separated Values" and technically you can use anything to separate the values. The code is the same no matter the separator, you just need to know what separates the data. So he made the code more flexible and renamed it to "dsv" meaning "Delimiter Separated Values". A delimiter is just a character that separates something. You will need to read the library's documentation to figure out how to use the library. Being able to read and figure out someone else's documentation is a key skill in programing. I have some tips but, the skill is really only learned by doing. Here's your chance to get started! (Hint: make sure you don't miss the part in their documentation about the `BOM`, you will need it.) The `d3-dsv` documentation is in their [README.md in the d3-dsv github repository](https://github.com/d3/d3-dsv#d3-dsv). 
 
-Once you have an array of city objects from the d3-dsv library, you will need to change the data structure. This is the real meat of the task. You will need to change the data structure from a 1 dimensional array of cities in to a array of `Country` objects. Each `Country` object will have two properties (or keys), `name` and `states`. The `states` value will be array of `City` objects. Each `City` object will have two properties (or keys), `name` and `population`. This might be known as a hierarchical data structure because `Countries` have `States` and `States` have `Cities`. The array will look something like this.
+Once you have an array of city objects from the d3-dsv library, you will need to change the data structure. This is the real meat of the task. You will need to change the data structure from a 1 dimensional array of cities in to an array of `Country` objects sorted by the name of the country. Each `Country` object will have two properties (or keys), `name` and `states`. The `states` value will be array of 
+`state` objects, sorted by the name of the state. Each `State` object will have two properties (or keys), `name` and `cities`. The `cities` value will be an array if `City` objects, sorted by the **population** of the city. Each `City` object will have two properties (or keys), `name` and `population`. This might be known as a hierarchical data structure because `Countries` have `States` and `States` have `Cities`. The array will look something like this.
 
 ```JavaScript
 [{
@@ -44,14 +46,14 @@ Once you have an array of city objects from the d3-dsv library, you will need to
                 name:"c1_s3_City4",
                 population: 427280
             },
-			//more City objects that belong to "c1_State3"
+			//more City objects that belong to "c1_State3", sorted by population
 			...
 			]
     },
-	// more State objects that belong to "Country1"
+	// more State objects that belong to "Country1", sorted by state name
 	]
 },
-// more Country objects
+// more Country objects, sorted by country name
 ...
 ];
 ```
@@ -60,7 +62,7 @@ Once you have the array looking like that, you will need to write out a `JSON` f
 
 ## CSV Files
 
-click link, then click the `raw` button, then right click anywhere and choose `Save as...`.
+**click link, then click the `raw` button, then right click anywhere and choose `Save as...`.**
 
 1. [citiesData.csv](citiesData.csv)  
 2. [citiesData1000.csv](citiesData1000.csv) (A Larger data set if you want. 10 countries, 5 states/country, 20 cities/state.)
